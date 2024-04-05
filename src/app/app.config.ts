@@ -6,6 +6,7 @@ import {CommonModule} from '@angular/common';
 import {AppComponent} from './app.component';
 import {provideRouter} from "@angular/router";
 import {routes} from "./app.routes";
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 NgModule({
   declarations: [
@@ -22,7 +23,7 @@ NgModule({
 })
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideRouter(routes), provideClientHydration()],
+  providers: [provideRouter(routes), provideClientHydration(), provideAnimationsAsync()],
 };
 
 /*import { ApplicationConfig } from '@angular/core';

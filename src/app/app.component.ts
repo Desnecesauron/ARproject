@@ -12,6 +12,8 @@ import {Observable, Subject, tap} from 'rxjs';
 import QrScanner from 'qr-scanner';
 import {RouterOutlet} from '@angular/router';
 import {isPlatformBrowser, JsonPipe, NgForOf, NgIf} from "@angular/common";
+import {MatDialog, MatDialogRef} from "@angular/material/dialog";
+import {QrCodeDialogComponent} from "./qr-code-dialog/qr-code-dialog.component";
 
 @Component({
   selector: 'app-root',
@@ -41,28 +43,15 @@ export class AppComponent implements OnInit {
   public screenWidth?: number;
   public screenHeight?: number;
   public resultQrCode?: string;
+  public isDialogOpen = false;
+  public dialogRef: MatDialogRef<QrCodeDialogComponent, any> | undefined
 
   constructor(
     private readonly captureService: NgxCaptureService,
-    @Inject(PLATFORM_ID) private platformId: Object
+    @Inject(PLATFORM_ID) private platformId: Object,
+    public dialog: MatDialog
   ) {
   }
-/*
-  public ngOnInit(): void {
-    this.screenWidth = window.innerWidth;
-    this.screenHeight = window.innerHeight;
-
-    if (isPlatformBrowser(this.platformId)) {
-      WebcamUtil.getAvailableVideoInputs().then(
-        (mediaDevices: MediaDeviceInfo[]) => {
-          this.multipleWebcamsAvailable = mediaDevices && mediaDevices.length > 1;
-        }
-      );
-    }
-
-    this.triggerSnapshotAsync();
-  }
-*/
 
   public ngOnInit(): void {
     setTimeout(() => {
@@ -100,12 +89,45 @@ export class AppComponent implements OnInit {
           QrScanner.scanImage(img)
             .then((result) => {
               console.log(result)
-              this.resultQrCode = result;
+              if (!this.isDialogOpen || result !== this.resultQrCode) {
+                this.openDialog(result);
+                this.resultQrCode = result;
+              }
             })
             .catch((error) => console.log(error || 'No QR code found.'));
         })
       )
       .subscribe();
+  }
+
+  openDialog(result: string): void {
+    if (!this.isDialogOpen) {
+      // alert('Não está aberto')
+      this.openNewDialog(result)
+    } else if (this.isDialogOpen && result == this.resultQrCode) {
+      // alert('Já está aberto o msm link')
+    } else if (this.isDialogOpen && result != this.resultQrCode && this.dialogRef) {
+      // alert('Já está aberto outro link')
+      this.dialogRef.close();
+      setTimeout(() => {
+        this.openNewDialog(result)
+      }, 200);
+    }
+  }
+
+  openNewDialog(result: string) {
+    // Abra a nova janela
+    this.isDialogOpen = true;
+    this.dialogRef = this.dialog.open(QrCodeDialogComponent, {
+      width: '250px',
+      data: result,
+      panelClass: 'custom-dialog-container'
+    });
+
+    // Quando a janela for fechada, atualize o estado
+    this.dialogRef.afterClosed().subscribe(() => {
+      this.isDialogOpen = false;
+    });
   }
 
   public toggleWebcam(): void {
@@ -115,7 +137,6 @@ export class AppComponent implements OnInit {
   public handleInitError(error: WebcamInitError): void {
     this.errors.push(error);
   }
-
 
 
   public handleImage(webcamImage: WebcamImage): void {
