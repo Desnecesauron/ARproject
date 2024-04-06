@@ -47,6 +47,7 @@ export class AppComponent implements OnInit {
   }
 
   public ngOnInit(): void {
+    // this.openNewDialog('https://www.google.com')
     setTimeout(() => {
       this.sla = true;
     }, 1000)
@@ -71,7 +72,7 @@ export class AppComponent implements OnInit {
 //        console.log('Taking picture');
 //        console.log(this.webCam)
         this.triggerSnapshot();
-      }, 1000);
+      }, 1500);
     }, 3000);
   }
 
@@ -114,7 +115,8 @@ export class AppComponent implements OnInit {
     // Abra a nova janela
     this.isDialogOpen = true;
     this.dialogRef = this.dialog.open(QrCodeDialogComponent, {
-      width: '250px',
+      width: '100vw',
+      height: '100vh',
       data: result,
       panelClass: 'custom-dialog-container'
     });
