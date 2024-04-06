@@ -107,3 +107,11 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   text-align: center !important;
   justify-content: end !important;
 }
+
+
+.matContainerInfo{
+
+  width: 75vw;
+  height: 80vh;
+
+}

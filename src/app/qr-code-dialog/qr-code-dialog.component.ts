@@ -1,6 +1,6 @@
-import { Component, Inject } from '@angular/core';
+import {Component, Inject} from '@angular/core';
 import {
-  MAT_DIALOG_DATA,
+  MAT_DIALOG_DATA, MatDialog,
   MatDialogActions,
   MatDialogContent,
   MatDialogRef,
@@ -8,6 +8,8 @@ import {
 } from '@angular/material/dialog';
 import {MatButton} from "@angular/material/button";
 import {NgIf, NgOptimizedImage} from "@angular/common";
+import {InfoDialogComponent} from "../info-dialog/info-dialog.component";
+
 
 @Component({
   selector: 'app-qr-code-dialog',
@@ -27,7 +29,7 @@ import {NgIf, NgOptimizedImage} from "@angular/common";
       <div mat-dialog-content>
         <p *ngIf="!data.includes('png')">{{ data }}</p>
         <!--        <img src='{{ "assets/images/" + data + ".jpg" }}'-->
-<!--        <img src='https://i.pinimg.com/736x/83/a4/e0/83a4e0d8189258e54afe1e58db3764b0.jpg'>-->
+        <!--        <img src='https://i.pinimg.com/736x/83/a4/e0/83a4e0d8189258e54afe1e58db3764b0.jpg'>-->
         <div style="max-height: 90vh; max-width: 90vw">
           <img alt="" src='{{ data }}' width="100%">
         </div>
@@ -44,15 +46,23 @@ import {NgIf, NgOptimizedImage} from "@angular/common";
 export class QrCodeDialogComponent {
   constructor(
     public dialogRef: MatDialogRef<QrCodeDialogComponent>,
+    public infoDialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public data: string
-  ) {}
+  ) {
+  }
 
   onClick(): void {
     this.dialogRef.close();
   }
 
   learnMore(data: any): void {
-    alert(data);
+    // alert(data);
+    this.infoDialog.open(InfoDialogComponent, {
+      width: '75vw',
+      height: '90vh',
+      // data: result,
+      panelClass: 'custom-dialog-container'
+    });
   }
 
 
