@@ -1,11 +1,4 @@
-import {
-  Component,
-  ElementRef,
-  EventEmitter, Inject,
-  OnInit,
-  Output, PLATFORM_ID,
-  ViewChild,
-} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Inject, OnInit, Output, PLATFORM_ID, ViewChild,} from '@angular/core';
 import {NgxCaptureService} from 'ngx-capture';
 import {WebcamImage, WebcamInitError, WebcamModule, WebcamUtil} from 'ngx-webcam';
 import {Observable, Subject, tap} from 'rxjs';
@@ -75,7 +68,8 @@ export class AppComponent implements OnInit {
     // Wait 3 seconds and then take a picture each 1 second
     setTimeout(() => {
       setInterval(() => {
-        console.log('Taking picture');
+//        console.log('Taking picture');
+//        console.log(this.webCam)
         this.triggerSnapshot();
       }, 1000);
     }, 3000);
@@ -94,7 +88,8 @@ export class AppComponent implements OnInit {
                 this.resultQrCode = result;
               }
             })
-            .catch((error) => console.log(error || 'No QR code found.'));
+            .catch((error) => {});
+          /* console.log(error || 'No QR code found.')*/
         })
       )
       .subscribe();
