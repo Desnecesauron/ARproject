@@ -83,7 +83,7 @@ export class AppComponent implements OnInit {
         tap((img) => {
           QrScanner.scanImage(img)
             .then((result) => {
-              console.log(result)
+              // console.log(result)
               if (!this.isDialogOpen || result !== this.resultQrCode) {
                 this.openDialog(result);
                 this.resultQrCode = result;

@@ -28,8 +28,11 @@ import {NgIf, NgOptimizedImage} from "@angular/common";
         <p *ngIf="!data.includes('png')">{{ data }}</p>
         <!--        <img src='{{ "assets/images/" + data + ".jpg" }}'-->
 <!--        <img src='https://i.pinimg.com/736x/83/a4/e0/83a4e0d8189258e54afe1e58db3764b0.jpg'>-->
-<!--        <img src='../../assets/bulbasaur.png'>-->
-        <img alt="" src='{{ data }}' width="100%">
+        <div style="max-height: 90vh; max-width: 90vw">
+          <img alt="" src='{{ data }}' width="100%">
+        </div>
+
+        <!--        <img src='../../assets/bulbasaur.png'>-->
       </div>
       <div mat-dialog-actions style="justify-content: space-around">
         <button mat-button (click)="onClick()">❌</button>
