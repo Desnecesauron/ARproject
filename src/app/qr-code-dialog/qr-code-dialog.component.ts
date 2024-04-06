@@ -7,7 +7,7 @@ import {
   MatDialogTitle
 } from '@angular/material/dialog';
 import {MatButton} from "@angular/material/button";
-import {NgOptimizedImage} from "@angular/common";
+import {NgIf, NgOptimizedImage} from "@angular/common";
 
 @Component({
   selector: 'app-qr-code-dialog',
@@ -17,18 +17,19 @@ import {NgOptimizedImage} from "@angular/common";
     MatDialogContent,
     MatDialogActions,
     MatButton,
-    NgOptimizedImage
+    NgOptimizedImage,
+    NgIf
   ],
   template: `
     <!--    <h1 mat-dialog-title>QR Code Link</h1> -->
     <!--    <div style="position:absolute; width: 100vw; height: 100vh; display: flex; justify-content: center; align-content: center; flex-direction: column; align-items: center;">-->
     <div class="matContainer">
       <div mat-dialog-content>
-        <p>{{ data }}</p>
+        <p *ngIf="!data.includes('png')">{{ data }}</p>
         <!--        <img src='{{ "assets/images/" + data + ".jpg" }}'-->
 <!--        <img src='https://i.pinimg.com/736x/83/a4/e0/83a4e0d8189258e54afe1e58db3764b0.jpg'>-->
 <!--        <img src='../../assets/bulbasaur.png'>-->
-        <img alt="" ngSrc='{{ data }}'>
+        <img alt="" src='{{ data }}' width="100%">
       </div>
       <div mat-dialog-actions style="justify-content: space-around">
         <button mat-button (click)="onClick()">❌</button>
