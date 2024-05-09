@@ -1,4 +1,4 @@
-import {Component, Inject} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {
   MAT_DIALOG_DATA, MatDialog,
   MatDialogActions,
@@ -43,12 +43,26 @@ import {InfoDialogComponent} from "../info-dialog/info-dialog.component";
     </div>
   `,
 })
-export class QrCodeDialogComponent {
+export class QrCodeDialogComponent implements OnInit{
+
+  public dataa:any;
+
   constructor(
     public dialogRef: MatDialogRef<QrCodeDialogComponent>,
     public infoDialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public data: string
   ) {
+    this.dataa = data;
+  }
+
+  public ngOnInit(): void {
+    if(!this.dataa.includes('.png')) {
+      let cssInjection = document.getElementsByClassName('matContainer')
+      //alert(cssInjection.item(0).attributes);
+      if (cssInjection.length > 0) {
+        (cssInjection[0] as HTMLElement).style.backgroundColor = 'white';
+      }
+    }
   }
 
   onClick(): void {

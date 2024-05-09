@@ -1,8 +1,8 @@
 <div style="text-align:center; overflow: hidden; bottom: 60px; position: fixed; left: 50%; transform: translate(-50%, 0);">
   <div #webCam>
     <webcam
-      [height]="screenHeight ? screenHeight/100*99 : 500"
-      [width]="screenWidth ? screenWidth/100*99 : 500"
+      [height]="screenHeight ? screenHeight/100*90 : 500"
+      [width]="screenWidth ? screenWidth/100*90 : 500"
       [trigger]="triggerObservable"
       (imageCapture)="handleImage($event)"
       *ngIf="showWebcam"
