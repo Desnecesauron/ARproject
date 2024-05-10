@@ -23,6 +23,9 @@ import {NgIf, NgOptimizedImage} from "@angular/common";
   template: `
     <div class="matContainerInfo" style="background-color: antiquewhite !important;">
       <h1 mat-dialog-title>Sobre o item</h1>
+      <div mat-dialog-content>
+        <p>{{ data }}</p>
+      </div>
       <div mat-dialog-actions style="justify-content: space-around">
         <button mat-button (click)="onClick()">❌</button>
       </div>

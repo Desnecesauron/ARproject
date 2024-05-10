@@ -9,6 +9,7 @@ import {
 import {MatButton} from "@angular/material/button";
 import {NgIf, NgOptimizedImage} from "@angular/common";
 import {InfoDialogComponent} from "../info-dialog/info-dialog.component";
+import {DataGetterService} from "../data-getter.service";
 
 
 @Component({
@@ -38,7 +39,7 @@ import {InfoDialogComponent} from "../info-dialog/info-dialog.component";
       </div>
       <div mat-dialog-actions style="justify-content: space-around">
         <button mat-button (click)="onClick()">❌</button>
-        <button mat-button (click)="learnMore(data)">⬆️</button>
+        <button mat-button (click)="learnMore(dataLearnMore)">⬆️</button>
       </div>
     </div>
   `,
@@ -46,30 +47,20 @@ import {InfoDialogComponent} from "../info-dialog/info-dialog.component";
 export class QrCodeDialogComponent implements OnInit{
 
   public dataa:any;
+  public dataLearnMore:string = '';
 
   constructor(
     public dialogRef: MatDialogRef<QrCodeDialogComponent>,
     public infoDialog: MatDialog,
+    public dataGetter: DataGetterService,
     @Inject(MAT_DIALOG_DATA) public data: string
   ) {
-    console.log('chegamos aqui')
-    console.log(data)
-    let responseFetch:string;
-    fetch(data, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-      .then(response => {
-        console.log(response)
-        //responseFetch = response.json();
-      })
-      .then(data => console.log(data))
-      .catch((error) => {
-        console.error('Error:', error);
-       // responseFetch=null;
-      });
+
+    let result: { image: string, text: string};
+    result = dataGetter.processValue(data)
+
+    data = result.image;
+    this.dataLearnMore = result.text;
 
 /*    if(responseFetch) {
       let json = responseFetch;
@@ -96,12 +87,12 @@ export class QrCodeDialogComponent implements OnInit{
     this.dialogRef.close();
   }
 
-  learnMore(data: any): void {
+  learnMore(dataLearnMore: any): void {
     // alert(data);
     this.infoDialog.open(InfoDialogComponent, {
       width: '75vw',
       height: '90vh',
-      // data: result,
+      data: dataLearnMore,
       panelClass: 'custom-dialog-container'
     });
   }
