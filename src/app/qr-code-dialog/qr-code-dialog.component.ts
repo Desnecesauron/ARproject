@@ -56,24 +56,29 @@ export class QrCodeDialogComponent implements OnInit{
     @Inject(MAT_DIALOG_DATA) public data: string
   ) {
 
-    let result: { image: string, text: string};
-    result = dataGetter.processValue(data)
-
-    data = result.image;
-    this.dataLearnMore = result.text;
-
-/*    if(responseFetch) {
-      let json = responseFetch;
-    }*/
-    data = JSON.parse(data).image;
-    this.dataa = data;
-
-
 
 
   }
 
   public ngOnInit(): void {
+
+    console.log('data', this.data)
+    let result: { image: string, text: string};
+    result = this.dataGetter.processValue(this.data)
+    console.log('result', result)
+    this.data = result.image;
+    console.log('data', this.data)
+    this.dataLearnMore = result.text;
+    console.log('dataLearnMore', this.dataLearnMore)
+
+    /*    if(responseFetch) {
+          let json = responseFetch;
+        }*/
+    // this.data = JSON.parse(this.data).image;
+    this.dataa = this.data;
+
+
+
     if(!this.dataa.includes('.png')) {
       let cssInjection = document.getElementsByClassName('matContainer')
       //alert(cssInjection.item(0).attributes);
