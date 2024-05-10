@@ -52,7 +52,34 @@ export class QrCodeDialogComponent implements OnInit{
     public infoDialog: MatDialog,
     @Inject(MAT_DIALOG_DATA) public data: string
   ) {
+    console.log('chegamos aqui')
+    console.log(data)
+    let responseFetch:string;
+    fetch(data, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then(response => {
+        console.log(response)
+        //responseFetch = response.json();
+      })
+      .then(data => console.log(data))
+      .catch((error) => {
+        console.error('Error:', error);
+       // responseFetch=null;
+      });
+
+/*    if(responseFetch) {
+      let json = responseFetch;
+    }*/
+    data = JSON.parse(data).image;
     this.dataa = data;
+
+
+
+
   }
 
   public ngOnInit(): void {
