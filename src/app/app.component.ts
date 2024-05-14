@@ -72,8 +72,8 @@ export class AppComponent implements OnInit {
 //        console.log('Taking picture');
 //        console.log(this.webCam)
         this.triggerSnapshot();
-      }, 1500);
-    }, 3000);
+      }, 1000);
+    }, 2000);
   }
 
   public triggerSnapshot(): void {

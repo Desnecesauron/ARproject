@@ -39,7 +39,7 @@ export class DataGetterService {
         result = { image: this.json10.image, text: this.json10.text };
         break;
       default:
-        result = { image: '', text: '' };
+        result = { image: '', text: value };
         break;
     }
     return result;

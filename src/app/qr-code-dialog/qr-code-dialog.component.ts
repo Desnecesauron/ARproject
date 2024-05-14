@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, Inject, OnDestroy, OnInit} from '@angular/core';
 import {
   MAT_DIALOG_DATA, MatDialog,
   MatDialogActions,
@@ -44,10 +44,11 @@ import {DataGetterService} from "../data-getter.service";
     </div>
   `,
 })
-export class QrCodeDialogComponent implements OnInit{
+export class QrCodeDialogComponent implements OnInit, OnDestroy{
 
   public dataa:any;
   public dataLearnMore:string = '';
+  public learnMoreWindow: any;
 
   constructor(
     public dialogRef: MatDialogRef<QrCodeDialogComponent>,
@@ -66,7 +67,11 @@ export class QrCodeDialogComponent implements OnInit{
     let result: { image: string, text: string};
     result = this.dataGetter.processValue(this.data)
     console.log('result', result)
-    this.data = result.image;
+    if(result.image) {
+      this.data = result.image;
+    } else if (result.text) {
+      this.data = result.text;
+    }
     console.log('data', this.data)
     this.dataLearnMore = result.text;
     console.log('dataLearnMore', this.dataLearnMore)
@@ -88,18 +93,25 @@ export class QrCodeDialogComponent implements OnInit{
     }
   }
 
+  public ngOnDestroy(): void {
+    if(this.learnMoreWindow) {
+      this.learnMoreWindow.close();
+    }
+  }
+
   onClick(): void {
     this.dialogRef.close();
   }
 
   learnMore(dataLearnMore: any): void {
     // alert(data);
-    this.infoDialog.open(InfoDialogComponent, {
+    this.learnMoreWindow = this.infoDialog.open(InfoDialogComponent, {
       width: '75vw',
       height: '90vh',
       data: dataLearnMore,
       panelClass: 'custom-dialog-container'
     });
+
   }
 
 
